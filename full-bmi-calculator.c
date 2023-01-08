@@ -20,36 +20,28 @@ int main()
     printf("Your BMI is = %f \n", bmi);
     printf("\n");
 
-    if(bmi < 15)
-    {
+    if(bmi < 15){
         printf("Your BMI category is: starvation\n");
     }
-    else if(bmi >= 15.1 && bmi <= 17.5)
-    {
+    else if(bmi >= 15.1 && bmi <= 17.5){
         printf("Your BMI category is: anorexic\n");
     }
-    else if(bmi >= 17.6 && bmi <= 18.5)
-    {
+    else if(bmi >= 17.6 && bmi <= 18.5){
         printf("Your BMI category is: underweight\n");
     }
-    else if(bmi >= 18.6 && bmi <= 24.9)
-    {
+    else if(bmi >= 18.6 && bmi <= 24.9){
         printf("Your BMI category is: ideal\n");
     }
-    else if(bmi >= 25 && bmi <= 25.9)
-    {
+    else if(bmi >= 25 && bmi <= 25.9){
         printf("Your BMI category is: overweight\n");
     }
-    else if(bmi >= 26 && bmi <= 30.9)
-    {
+    else if(bmi >= 26 && bmi <= 30.9){
         printf("Your BMI category is: obese\n");
     }
-    else if(bmi >= 40)
-    {
+    else if(bmi >= 40){
         printf("Your BMI category is: morbidly obese\n");
     }
-    else
-    {
+    else{
         printf("error input data\n");
     }
 
