@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int n;
+int n=0;
 int *array;
 
 // declaring functions
@@ -63,7 +63,7 @@ int menu(){
 // create array function
 void create_array(){
     int i;
-    printf("\n\nEnter the size of array : ");
+    printf("\n\nEnter array size : ");
     scanf("%d", &n);
 
     array = malloc(sizeof(int) * n);
@@ -79,54 +79,70 @@ void create_array(){
 
 // display array elements
 void display_array(){
-    printf("\nArray values are : \n");
+    if(n == 0){
+        printf("\ncreate an array first\n");
+    }else{
+        printf("\nArray values are : \n");
 
-    for(int i = 0; i < n; i++){
-        printf("%d\t", array[i]);
+        for(int i = 0; i < n; i++){
+            printf("%d\t", array[i]);
+        }
+        printf("\n\n");
     }
-    printf("\n\n");
 }
 
 // insert into array
 void insert_into_array(){
-    n++;
-    int pos, elem, i;
-    printf("\nEnter the position : ");
-    scanf("%d", &pos);
 
-    printf("Enter the value : ");
-    scanf("%d", &elem);
+    if(n == 0){
+        printf("\ncreate an array first\n");
+    }else{
+        n++;
+        int pos, elem, i;
+        printf("\nEnter the position : ");
+        scanf("%d", &pos);
 
-    for(i = n-1; i >= pos; i--){
-        array[i] = array[i - 1];
+        printf("Enter the value : ");
+        scanf("%d", &elem);
+
+        for(i = n-1; i >= pos; i--){
+            array[i] = array[i - 1];
+        }
+
+        array[pos - 1] = elem;
+
+        printf("\nArray values are : \n");
+        for(i = 0; i < n; i++){
+            printf("%d\t", array[i]);
+        }
+        printf("\n\n");
     }
-
-    array[pos - 1] = elem;
-
-    printf("\nArray values are : \n");
-    for(i = 0; i < n; i++){
-        printf("%d\t", array[i]);
-    }
-    printf("\n\n");
 }
 
 // delete from array
 void delete_from_array(){
-    int pos, i;
-    printf("\nEnter the position to delete : ");
-    scanf("%d", &pos);
+    if(n == 0){
+        printf("\ncreate an array first\n");
+    }else{
+        int pos, i;
+        printf("\nEnter the position to delete : ");
+        scanf("%d", &pos);
 
-    for(i = pos-1; i < n-1; i++){
-        array[i] = array[i + 1];
+        if(pos > n){
+            printf("\nenter a valid position from 1 to %d", n);
+        }else{
+            for(i = pos-1; i < n-1; i++){
+                array[i] = array[i + 1];
+            }
+            n--;
+        }
+
+        printf("\nArray values are : \n");
+        for(i = 0; i < n; i++){
+            printf("%d\t", array[i]);
+        }
+        printf("\n\n");
     }
-
-    n--;
-
-    printf("\nArray values are : \n");
-    for(i = 0; i < n; i++){
-        printf("%d\t", array[i]);
-    }
-    printf("\n\n");
 }
 
 // exit the program
