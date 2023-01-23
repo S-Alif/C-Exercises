@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 int n=0;
 int *array;

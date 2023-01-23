@@ -1,61 +1,95 @@
-/* replace string fully completed */
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
 
-#include<stdio.h>
+#define MAX 4
 
-// declare everything globally
-char STR[50], PTR[20], REP[20], REPLACED[50];
-int i = 0, j, k = 0, l, m = 0, flag = 0;
+int stack[MAX], item;
+int ch, top = -1, count = 0, status = 0;
 
-// function to change all occurances in the main string
-void replace_string(){
-
-    while (STR[i] != '\0'){
-        j=i;
-        k = 0;
-
-        while(PTR[k] != '\0'){
-            if(PTR[k] == STR[j]){
-                k++;
-                j++;
-                if(PTR[k] == '\0'){
-                    for(l = 0; REP[l] != '\0'; l++){
-                        REPLACED[m] = REP[l];
-                        m++;
-                    }
-                    flag = 1;
-                    i=j;
-                }
-            }
-            else{
-                REPLACED[m] = STR[i];
-                m++;
-                i++;
-                k = 0;
-                break;
-            }
-        }
+/*PUSH FUNCTION*/
+void push(int stack[], int item){
+    if (top == (MAX - 1))
+        printf("\n\nStack is Overflow");
+    else{
+        stack[++top] = item;
+        status++;
     }
-    REPLACED[m] = '\0';
 }
 
-int main(){ 
-
-    printf("Enter the main string : ");
-    gets(STR);
-    printf("Enter the pattern to find in the main string : ");
-    gets(PTR);
-    printf("Enter the replace pattern : ");
-    gets(REP);
-
-    // call the function
-    replace_string();
-    
-    // verify the result
-    if (flag == 0){
-        printf("\npattern don't match");
-    }else{
-        printf("\nReplaced string : %s", REPLACED);
+/*POP FUNCTION*/
+int pop(int stack[]){
+    int ret;
+    if (top == -1)
+        printf("\n\nStack is Underflow");
+    else{
+        ret = stack[top--];
+        status--;
+        printf("\nPopped element is %d", ret);
     }
-    
-    return 0;
+    return ret;
+}
+
+/* FUNCTION TO CHECK STACK IS PALINDROME OR NOT */
+void palindrome(int stack[]){
+    int i, temp;
+    temp = status;
+
+    for (i = 0; i < temp; i++){
+        if (stack[i] == pop(stack))
+            count++;
+    }
+    if (temp == count)
+        printf("\nStack contents are Palindrome");
+    else
+        printf("\nStack contents are not palindrome");
+}
+
+/*FUNCTION TO DISPLAY STACK*/
+void display(int stack[]){
+    int i;
+    printf("\nThe stack contents are:");
+    if (top == -1)
+        printf("\nStack is Empty");
+    else{
+        for (i = top; i >= 0; i--)
+            printf("\n ------\n| %d |", stack[i]);
+        printf("\n");
+    }
+}
+
+/*MAIN PROGRAM*/
+void main(){
+    do{
+
+        printf("\n\n----MAIN MENU----\n");
+        printf("\n1. PUSH (Insert) in the Stack");
+        printf("\n2. POP (Delete) from the Stack");
+        printf("\n3. PALINDROME check using Stack");
+        printf("\n4. Exit (End the Execution)");
+        printf("\nEnter Your Choice: ");
+        scanf("%d", &ch);
+        
+        switch(ch){
+                case 1:
+                    printf("\nEnter a element to be pushed: ");
+                    scanf("%d", &item);
+                    push(stack, item);
+                    display(stack);
+                    break;
+                case 2:
+                    item = pop(stack);
+                    display(stack);
+                    break;
+                case 3:
+                    palindrome(stack);
+                    break;
+                case 4:
+                    exit(0);
+                    break;
+                default:
+                    printf("\nEND OF EXECUTION");
+        }
+    } while (ch != 4);
+    getch();
 }

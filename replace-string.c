@@ -1,43 +1,44 @@
-/* NOTE : not fully completed but works for some cases */
-
 #include<stdio.h>
 
 // declare everything globally
-char STR[20], PTR[20], REP[20];
-int i = 0, flag = 0, j, k = 0;
+char STR[50], PTR[20], REP[20], REPLACED[50];
+int i = 0, j, k = 0, l, m = 0, flag = 0;
 
 // function to change all occurances in the main string
-void change_string(){
+void replace_string(){
 
     while (STR[i] != '\0'){
-        j = i;
+        j=i;
         k = 0;
 
         while(PTR[k] != '\0'){
-            if(PTR[k] == STR[i+k]){
+            if(PTR[k] == STR[j]){
                 k++;
+                j++;
                 if(PTR[k] == '\0'){
-                    for(int l = 0; REP[l] != '\0'; l++){
-                        STR[i] = REP[l];
-                        i++;
+                    for(l = 0; REP[l] != '\0'; l++){
+                        REPLACED[m] = REP[l];
+                        m++;
                     }
                     flag = 1;
                     i=j;
                 }
             }
             else{
-                i = j;
+                REPLACED[m] = STR[i];
+                m++;
+                i++;
                 k = 0;
                 break;
             }
         }
-        i++;
     }
+    REPLACED[m] = '\0';
 }
 
 int main(){ 
 
-    printf("Enter the main string : ");
+    printf("\n\nEnter the main string : ");
     gets(STR);
     printf("Enter the pattern to find in the main string : ");
     gets(PTR);
@@ -45,14 +46,14 @@ int main(){
     gets(REP);
 
     // call the function
-    change_string();
+    replace_string();
     
     // verify the result
     if (flag == 0){
         printf("\npattern don't match");
     }else{
-        printf("\n%s", STR);
+        printf("\nReplaced string : %s\n\n", REPLACED);
     }
-   
+    
     return 0;
 }
