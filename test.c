@@ -1,212 +1,176 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-struct node
+#include <stdio.h>
+#include <stdlib.h>
+#include<ctype.h>
+struct BST
 {
-    char usn[25],name[25],branch[25];
-    int sem;
-    long int phone;
-    struct node *link;
+    int data;
+    struct BST *left;
+    struct BST *right;
 };
-typedef struct node * NODE;
-
-NODE start = NULL;
-int count=0;
-
-
-NODE create()
+typedef struct BST NODE;
+NODE *node;
+NODE *createtree(NODE *node, int data)
 {
-    NODE snode;
-    snode = (NODE)malloc(sizeof(struct node));
-
-    if(snode == NULL)
+    if (node == NULL)
     {
-        printf("\nMemory is not available");
-        exit(1);
+        NODE *temp;
+        temp = (NODE *)malloc(sizeof(NODE));
+        temp->data = data;
+        temp->left = temp->right = NULL;
+        return temp;
     }
-    printf("\nEnter the usn,Name,Branch, sem,PhoneNo of the student:");
-    scanf("%s %s %s %d %ld",snode->usn, snode->name, snode->branch, &snode->sem, &snode->phone);
-    snode->link=NULL;
-    count++;
-    return snode;
-}
-
-NODE insertfront()
-{
-    NODE temp;
-    temp = create();
-    if(start == NULL)
+    if (data < (node->data))
     {
-           return temp;
+        node->left = createtree(node->left, data);
     }
-
-    temp->link = start;
-    return temp;
-}
-
-
-NODE deletefront()
-{
-    NODE temp;
-    if(start == NULL)
+    else if (data > node->data)
     {
-        printf("\nLinked list is empty");
+        node->right = createtree(node->right, data);
+    }
+    return node;
+}
+NODE *search(NODE *node, int data)
+{
+    if (node == NULL)
+        printf("\nElement not found");
+    else if (data < node->data)
+    {
+        node->left = search(node->left, data);
+    }
+    else if (data > node->data)
+    {
+        node->right = search(node->right, data);
+    }
+    else
+        printf("\nElement found is: %d", node->data);
+    return node;
+}
+void inorder(NODE *node)
+{
+    if (node != NULL)
+    {
+        inorder(node->left);
+        printf("%d\t", node->data);
+        inorder(node->right);
+    }
+}
+void preorder(NODE *node)
+{
+    if (node != NULL)
+    {
+        printf("%d\t", node->data);
+        preorder(node->left);
+        preorder(node->right);
+    }
+}
+void postorder(NODE *node)
+{
+    if (node != NULL)
+    {
+        postorder(node->left);
+        postorder(node->right);
+        printf("%d\t", node->data);
+    }
+}
+NODE *findMin(NODE *node)
+{
+    if (node == NULL)
+    {
         return NULL;
     }
-
-    if(start->link == NULL)
-    {
-            printf("\nThe Student node with usn:%s is deleted ",start->usn);
-            count--;
-            free(start);
-            return NULL;
-    }
-    temp = start;
-    start = start->link;
-    printf("\nThe Student node with usn:%s is deleted",temp->usn);
-    count--;
-    free(temp);
-    return start;
+    if (node->left)
+        return findMin(node->left);
+    else
+        return node;
 }
-
-NODE insertend()
+NODE *del(NODE *node, int data)
 {
-    NODE cur,temp;
-    temp = create();
-
-    if(start == NULL)
+    NODE *temp;
+    if (node == NULL)
     {
-      return temp;
+        printf("\nElement not found");
     }
-    cur = start;
-    while(cur->link !=NULL)
+    else if (data < node->data)
     {
-         cur = cur->link;
+        node->left = del(node->left, data);
     }
-    cur->link = temp;
-    return start;
-}
-
-NODE deleteend()
-{
-     NODE cur,prev;
-     if(start == NULL)
-     {
-        printf("\nLinked List is empty");
-        return NULL;
-     }
-
-     if(start->link == NULL)
-     {
-        printf("\nThe student node with the usn:%s is deleted",start->usn);
-        free(start);
-        count--;
-        return NULL;
-     }
-
-     prev = NULL;
-     cur = start;
-     while(cur->link!=NULL)
-     {
-         prev = cur;
-         cur = cur->link;
-     }
-
-      printf("\nThe student node with the usn:%s is deleted",cur->usn);
-      free(cur);
-      prev->link = NULL;
-      count--;
-      return start;
-}
-
-void display()
-{
-    NODE cur;
-    int num=1;
-
-
-    if(start == NULL)
+    else if (data > node->data)
     {
-
-        printf("\nNo Contents to display in SLL \n");
-        return;
+        node->right = del(node->right, data);
     }
-    printf("\nThe contents of SLL: \n");
-    cur = start;
-    while(cur!=NULL)
-    {
-       printf("\n||%d|| USN:%s| Name:%s| Branch:%s| Sem:%d| Ph:%ld|",num,cur->usn, cur->name,cur->branch, cur->sem,cur->phone);
-       cur = cur->link;
-       num++;
-    }
-    printf("\n No of student nodes is %d \n",count);
-}
-
-void stackdemo()
-{
-   int ch;
-   while(1)
-   {
-     printf("\n~~Stack Demo using SLL~~\n");
-     printf("\n1:Push operation \n2: Pop operation \n3: Display \n4:Exit \n");
-     printf("\nEnter your choice for stack demo");
-     scanf("%d",&ch);
-
-     switch(ch)
-     {
-        case 1: start = insertfront();
-                break;
-        case 2: start = deletefront();
-                break;
-        case 3: display();
-               break;
-       default : return;
-     }
-   }
-   return;
-}
-
-int main()
-{
-    int ch,i,n;
-    while(1)
-    {
-        printf("\n~~Menu~~");
-        printf("\nEnter your choice for SLL operation \n");
-        printf("\n1:Create SLL of Student Nodes");
-        printf("\n2:DisplayStatus");
-        printf("\n3:InsertAtEnd");
-        printf("\n4:DeleteAtEnd");
-        printf("\n5:Stack Demo using SLL(Insertion and Deletion at Front)");
-        printf("\n6:Exit \n");
-        printf("\nEnter your choice:");
-        scanf("%d",&ch);
-
-        switch(ch)
+    else
+    { /* Now We can delete this node and replace with either minimum element in the right sub tree or maximum element in the left subtree */
+        if (node->right && node->left)
+        { /* Here we will replace with minimum element in the right sub tree */
+            temp = findMin(node->right);
+            node->data = temp->data;
+            /* As we replaced it with some other node, we have to delete that node */
+            node->right = del(node->right, temp->data);
+        }
+        else
         {
-        case 1 : printf("\nEnter the no of students:    ");
-                 scanf("%d",&n);
-                 for(i=1;i<=n;i++)
-                    start = insertfront();
-                 break;
-
-        case 2: display();
-                break;
-
-        case 3: start = insertend();
-                break;
-
-        case 4: start = deleteend();
-                break;
-
-        case 5: stackdemo();
-                break;
-
-        case 6: exit(0);
-
-        default: printf("\nPlease enter the valid choice");
-        
+            /* If there is only one or zero children then we can directly remove it from the tree and connect its parent to its child */
+            temp = node;
+            if (node->left == NULL)
+                node = node->right;
+            else if (node->right == NULL)
+                node = node->left;
+            free(temp); /* temp is longer required */
         }
-        
+    }
+
+}
+void main()
+{
+    int data, ch, i, n;
+    NODE *root = NULL;
+    while (1)
+    {
+        printf("\n1.Insertion in Binary Search Tree");
+        printf("\n2.Search Element in Binary Search Tree");
+        printf("\n3.Delete Element in Binary Search Tree");
+        printf("\n4.Inorder\n5.Preorder\n6.Postorder\n7.Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            printf("\nEnter N value: ");
+            scanf("%d", &n);
+            printf("\nEnter the values to create BST like(6,9,5,2,8,15,24,14,7,8,5,2)\n");
+            for (i = 0; i < n; i++)
+            {
+                scanf("%d", &data);
+                root = createtree(root, data);
+            }
+            break;
+        case 2:
+            printf("\nEnter the element to search: ");
+            scanf("%d", &data);
+            root = search(root, data);
+            break;
+        case 3:
+            printf("\nEnter the element to delete: ");
+            scanf("%d", &data);
+            root = del(root, data);
+            break;
+        case 4:
+            printf("\nInorder Traversal: \n");
+            inorder(root);
+            break;
+        case 5:
+            printf("\nPreorder Traversal: \n");
+            preorder(root);
+            break;
+        case 6:
+            printf("\nPostorder Traversal: \n");
+            postorder(root);
+            break;
+        case 7:
+            exit(0);
+        default:
+            printf("\nWrong option");
+            break;
         }
+    }
 }

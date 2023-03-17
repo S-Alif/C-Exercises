@@ -94,17 +94,7 @@ void insert_data(){
     printf("------------------------------\n");
 
     // enter 1st data
-    printf("\nEnter USN : ");
-    scanf("%d", &temp->usn);
-    printf("Enter Name : ");
-    scanf("%s", temp->name);
-    printf("Enter Branch : ");
-    scanf("%s", temp->branch);
-    printf("Enter Semester : ");
-    scanf("%d", &temp->semester);
-    printf("Enter Phone : ");
-    scanf("%d", &temp->phone);
-    printf("\n-----------------------\n");
+    enter_data(head);
 
     // entering data for other nodes
     for(int i = 1; i < n; i++){
@@ -127,7 +117,7 @@ void display_data(){
         temp = start;
 
         printf("\nUSN\t\tName\t\tBranch\t\tSemester\tPhone");
-        printf("\n-------------------------------------------------------------------------------------\n");
+        printf("\n-------------------------------------------------------------------------------\n");
         while(temp != NULL){
             printf("\n%d\t\t%s\t\t%s\t\t%d\t\t%d\n",temp->usn, temp->name, temp->branch, temp->semester, temp->phone);
             temp = temp->next_data;
