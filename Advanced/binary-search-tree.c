@@ -4,7 +4,6 @@
 // structure for binary search tree
 typedef struct tree{
     int data;
-
     struct tree *left_data, *right_data;
 }tree;
 
@@ -18,10 +17,11 @@ int menu(){
     int choice;
 
     printf("Perform action on a binary search tree : \n");
-    printf("\t1. Create tree\n\t2. Delete data from the tree\n\t3. In-order\n\t4. Pre-order\n\t5. Post-order\n\t6. Exit\n\nYour choice : ");
+    printf("\t1. Create tree\n\t2. Search data\n\t3. Delete data from the tree\n\t4. In-order\n\t5. Pre-order\n\t6. Post-order\n\t7. Exit\n\nYour choice : ");
     scanf("%d", &choice);
 
     return choice;
+    printf("\n\n");
 }
 
 // insert data
@@ -70,22 +70,44 @@ tree* lower_data(tree *address){
     }
 }
 
+// searching data
+tree* search_data(tree *address, int data){
+    if(address == NULL){
+        printf("\n%d not found", data);
+    }
+    else if(data < address->data){
+        address->left_data = search_data(address->left_data, data);
+    }
+    else if(data > address->data){
+        address->right_data = search_data(address->right_data, data);
+    }
+    else{
+        printf("\n%d is found", address->data);
+    }
+
+    return address;
+}
+
 // delete data
 tree* delete_data(tree *address, int data){
     tree *temp;
 
     if(address == NULL){
         printf("\n\nElemenet Not Found\n\n");
-    }else if(data < address->data){
+    }
+    else if(data < address->data){
         address->left_data = delete_data(address->left_data, data);
-    }else if(data > address->data){
+    }
+    else if(data > address->data){
         address->right_data = delete_data(address->right_data, data);
-    }else{
+    }
+    else{
         if(address->left_data && address->right_data){
             temp = lower_data(address->right_data);
             address->data = temp->data;
             address->right_data = delete_data(address->right_data, temp->data);
-        }else{
+        }
+        else{
             temp = address;
             if(address->left_data == NULL){
                 address = address->right_data;
@@ -95,9 +117,8 @@ tree* delete_data(tree *address, int data){
             }
             free(temp);
         }
-
     }
-
+    
     return address;
 }
 
@@ -146,26 +167,33 @@ int main(){
             case 1: create_tree();
                     break;
             case 2:
+                printf("Enter element to search : ");
+                scanf("%d", &data);
+                search_data(root, data);
+                printf("\n\n");
+                break;
+            case 3:
                 printf("Enter element to delete : ");
                 scanf("%d", &data);
                 delete_data(root, data);
+                printf("\n\n");
                 break;
-            case 3:
+            case 4:
                 printf("Displaying elements in \"IN ORDER\" : \n");
                 in_order(root);
                 printf("\n\n");
                 break;
-            case 4:
+            case 5:
                 printf("Displaying elements in \"PRE ORDER\" : \n");
                 pre_order(root);
                 printf("\n\n");
                 break;
-            case 5:
+            case 6:
                 printf("Displaying elements in \"POST ORDER\" : \n");
                 post_order(root);
                 printf("\n\n");
                 break;
-            case 6: action = exit_program();
+            case 7: action = exit_program();
                     break;
             default: printf("INVALID OPTION\n\n");
                      break;
