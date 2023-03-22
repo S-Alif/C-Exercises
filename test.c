@@ -1,176 +1,319 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include<ctype.h>
-struct BST
+#include<stdio.h>
+#include<stdlib.h>
+
+// structure to store student data
+typedef struct student{
+    int usn;
+    char name[20];
+    char branch[10];
+    int sem;
+    int phone;
+
+    struct student *next;
+}student;
+
+// other global variables
+int max, top = 0, n;
+
+student *start;
+
+int menu()
 {
-    int data;
-    struct BST *left;
-    struct BST *right;
-};
-typedef struct BST NODE;
-NODE *node;
-NODE *createtree(NODE *node, int data)
-{
-    if (node == NULL)
-    {
-        NODE *temp;
-        temp = (NODE *)malloc(sizeof(NODE));
-        temp->data = data;
-        temp->left = temp->right = NULL;
-        return temp;
-    }
-    if (data < (node->data))
-    {
-        node->left = createtree(node->left, data);
-    }
-    else if (data > node->data)
-    {
-        node->right = createtree(node->right, data);
-    }
-    return node;
+    int choice;
+    printf("\t\t\t\n==========MENU==========");
+    printf("\n1. Create list.");
+    printf("\n2. Insert data.");
+    printf("\n3. Delete data.");
+    printf("\n4. Display data.");
+    printf("\n5. Stack demonstration.");
+    printf("\n6. Queue demonstretion.");
+    printf("\n7. Exit.");
+
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+
+    return choice;
+    printf("\n");
 }
-NODE *search(NODE *node, int data)
+
+//Stack menu
+int stack_menu()
 {
-    if (node == NULL)
-        printf("\nElement not found");
-    else if (data < node->data)
-    {
-        node->left = search(node->left, data);
-    }
-    else if (data > node->data)
-    {
-        node->right = search(node->right, data);
-    }
-    else
-        printf("\nElement found is: %d", node->data);
-    return node;
+    int choice;
+
+    printf("\t\t\t\n========Stack Demonstration========");
+    printf("\n1. Push data.");
+    printf("\n2. Pop data.");
+    printf("\n3. Display stack.");
+    printf("\n4. Exit from stack");
+
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+
+    return choice;
 }
-void inorder(NODE *node)
+
+//Queue menu
+int queue_menu()
 {
-    if (node != NULL)
-    {
-        inorder(node->left);
-        printf("%d\t", node->data);
-        inorder(node->right);
-    }
+    int choice;
+
+    printf("\t\t\t\n========Queue Demonstration========");
+    printf("\n1. Insert data.");
+    printf("\n2. Delete data.");
+    printf("\n3. Display queue.");
+    printf("\n4. Exit from queue");
+
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+
+    return choice;
 }
-void preorder(NODE *node)
-{
-    if (node != NULL)
-    {
-        printf("%d\t", node->data);
-        preorder(node->left);
-        preorder(node->right);
-    }
+
+/*enter other data*/
+student* enter_data(student *address){
+    printf("\nEnter USN : ");
+    scanf("%d", &address->usn);
+    printf("Enter Name : ");
+    scanf("%s", address->name);
+    printf("Enter Branch : ");
+    scanf("%s", address->branch);
+    printf("Enter Semester : ");
+    scanf("%d", &address->sem);
+    printf("Enter Phone : ");
+    scanf("%d", &address->phone);
 }
-void postorder(NODE *node)
-{
-    if (node != NULL)
-    {
-        postorder(node->left);
-        postorder(node->right);
-        printf("%d\t", node->data);
-    }
+
+/* create list  */
+void create_list(){
+    printf("\n\nEnter the size of the list : ");
+    scanf("%d", &n);
+
+    printf("\nA list of size - %d has been created\n\n", n);
 }
-NODE *findMin(NODE *node)
-{
-    if (node == NULL)
-    {
-        return NULL;
-    }
-    if (node->left)
-        return findMin(node->left);
-    else
-        return node;
-}
-NODE *del(NODE *node, int data)
-{
-    NODE *temp;
-    if (node == NULL)
-    {
-        printf("\nElement not found");
-    }
-    else if (data < node->data)
-    {
-        node->left = del(node->left, data);
-    }
-    else if (data > node->data)
-    {
-        node->right = del(node->right, data);
-    }
-    else
-    { /* Now We can delete this node and replace with either minimum element in the right sub tree or maximum element in the left subtree */
-        if (node->right && node->left)
-        { /* Here we will replace with minimum element in the right sub tree */
-            temp = findMin(node->right);
-            node->data = temp->data;
-            /* As we replaced it with some other node, we have to delete that node */
-            node->right = del(node->right, temp->data);
-        }
-        else
-        {
-            /* If there is only one or zero children then we can directly remove it from the tree and connect its parent to its child */
-            temp = node;
-            if (node->left == NULL)
-                node = node->right;
-            else if (node->right == NULL)
-                node = node->left;
-            free(temp); /* temp is longer required */
-        }
+
+/* insert data */
+void insert(){
+    student *head, *temp;
+
+    head = malloc(sizeof(student));
+    start = head;
+    temp = head;
+
+    // enter 1st data
+    printf("\nEnter USN : ");
+    scanf("%d", &temp->usn);
+    printf("Enter Name : ");
+    scanf("%s", temp->name);
+    printf("Enter Branch : ");
+    scanf("%s", temp->branch);
+    printf("Enter Semester : ");
+    scanf("%d", &temp->sem);
+    printf("Enter Phone : ");
+    scanf("%d", &temp->phone);
+
+
+    // entering data for other nodes
+    for(int i = 1; i < n; i++){
+        head = malloc(sizeof(student));
+        temp->next = head;
+        enter_data(head);
+        temp = temp->next;
     }
 
+    printf("\nData has been entered\n\n");
 }
-void main()
-{
-    int data, ch, i, n;
-    NODE *root = NULL;
-    while (1)
-    {
-        printf("\n1.Insertion in Binary Search Tree");
-        printf("\n2.Search Element in Binary Search Tree");
-        printf("\n3.Delete Element in Binary Search Tree");
-        printf("\n4.Inorder\n5.Preorder\n6.Postorder\n7.Exit");
-        printf("\nEnter your choice: ");
-        scanf("%d", &ch);
-        switch (ch)
+
+/* display data */
+void display_data(){
+    student *temp;
+
+    if(start == NULL){
+        printf("\nThere is no data in the list\n");
+    }else{
+        temp = start;
+        while(temp != NULL)
         {
-        case 1:
-            printf("\nEnter N value: ");
-            scanf("%d", &n);
-            printf("\nEnter the values to create BST like(6,9,5,2,8,15,24,14,7,8,5,2)\n");
-            for (i = 0; i < n; i++)
-            {
-                scanf("%d", &data);
-                root = createtree(root, data);
-            }
-            break;
-        case 2:
-            printf("\nEnter the element to search: ");
-            scanf("%d", &data);
-            root = search(root, data);
-            break;
-        case 3:
-            printf("\nEnter the element to delete: ");
-            scanf("%d", &data);
-            root = del(root, data);
-            break;
-        case 4:
-            printf("\nInorder Traversal: \n");
-            inorder(root);
-            break;
-        case 5:
-            printf("\nPreorder Traversal: \n");
-            preorder(root);
-            break;
-        case 6:
-            printf("\nPostorder Traversal: \n");
-            postorder(root);
-            break;
-        case 7:
-            exit(0);
-        default:
-            printf("\nWrong option");
-            break;
+        printf("\nUSN : %d", temp->usn);
+        printf("\nName: %s", temp->name);
+        printf("\nBranch: %s", temp->branch);
+        printf("\nSemester: %d", temp->sem);
+        printf("\nPhone: %d", temp->phone);
+        temp = temp->next;
         }
     }
+    printf("\n\n");
+}
+
+/* delete data */
+void delete_data(){
+    student *temp, *position;
+    int i, pos;
+
+    if(start == NULL){
+        printf("\nThere is no data in the list\n");
+    }else{
+        printf("\n\nEnter position : ");
+        scanf("%d", &pos);
+
+        position = malloc(sizeof(student));
+        temp = start;
+
+        if(pos == 1){
+            start = start->next;
+            temp->next = NULL;
+            free(temp);
+        }else{
+            while(pos != 1){
+                position = temp->next;
+                temp->next = temp->next->next;
+                pos--;
+            }
+        }    
+
+        position = temp->next;
+        free(temp->next);
+        temp->next = NULL;
+
+        printf("\nData has been deleted\n\n");
+    }
+}
+
+/* stack deletion */
+void stack_delete(){
+    student*head, *temp;
+
+    temp = start;
+    head = temp->next;
+    start = head;
+
+    free(temp);
+
+    printf("\nData has been deleted\n\n");
+}
+
+/* stack insertion */
+void stack_insert(){
+    student *head, *temp;
+
+    head = malloc(sizeof(student));
+    temp = start;
+    start = head;
+
+    enter_data(head);
+    head->next = temp;
+
+    printf("\nData has been entered\n\n");
+}
+
+
+// stack demonstration
+void stack_demo()
+{
+    int choice;
+
+    do
+    {
+        choice = stack_menu();
+
+        switch(choice){
+            case 1: stack_insert();
+                    break;
+            case 2: stack_delete();
+                    break;
+            case 3: display_data();
+                    break;
+            case 4: choice = 4;
+                    break;
+            default: printf("INVALID OPTION\n\n");
+                    break;
+        }
+    }while(choice != 4);
+
+    printf("\n\n");      
+}
+
+
+/* queue insert */
+void queue_insert(){
+    student *rear, *temp;
+
+    rear = malloc(sizeof(student));
+    temp = start;
+    enter_data(rear);
+
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+
+    temp->next= rear;
+    printf("\nData has been entered\n\n");
+}
+
+/* queue delete */
+void queue_delete(){
+    student *front, *temp;
+
+    front = start;
+    temp = start;
+
+    start = temp->next;
+
+    free(front);
+    printf("\nData has been deleted\n\n");
+}
+
+/* queue demonstration */
+void queue_demo()
+{
+    int choice;
+
+    do
+    {
+        choice = queue_menu();
+
+        switch(choice){
+            case 1: queue_insert();
+                    break;
+            case 2: queue_delete();
+                    break;
+            case 3: display_data();
+                    break;
+            case 4: choice = 4;
+                    break;
+            default: printf("INVALID OPTION\n\n");
+                     break;
+    } 
+   } while (choice != 4);
+    printf("\n\n");
+}
+
+int main(){
+    int choice;
+
+    do
+    {
+        choice = menu();
+
+        switch(choice){
+            case 1: create_list();
+                    break;
+            case 2: insert();
+                    break;
+            case 3: delete_data();
+                    break;
+            case 4: display_data();
+                    break;
+            case 5: stack_demo();
+                    break;
+            case 6: queue_demo();
+                    break;
+            case 7: choice = 7;
+                    break;
+            default: printf("INVALID OPTION\n\n");
+                     break;
+        }
+    } while (choice != 7);
+
+    return 0;
 }

@@ -17,7 +17,7 @@ int menu(){
     int choice;
 
     printf("Perform action on a binary search tree : \n");
-    printf("\t1. Create tree\n\t2. Search data\n\t3. Delete data from the tree\n\t4. In-order\n\t5. Pre-order\n\t6. Post-order\n\t7. Exit\n\nYour choice : ");
+    printf("\t1. Create tree\n\t2. Search data\n\t3. Delete data\n\t4. In-order\n\t5. Pre-order\n\t6. Post-order\n\t7. Exit\n\nYour choice : ");
     scanf("%d", &choice);
 
     return choice;
@@ -36,7 +36,7 @@ tree* insert_data(tree *address, int data){
     if(data < address->data){
         address->left_data = insert_data(address->left_data, data);
     }
-    else if(data > address->data){
+    if(data > address->data){
         address->right_data = insert_data(address->right_data, data);
     }
 
