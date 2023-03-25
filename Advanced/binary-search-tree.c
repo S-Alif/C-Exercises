@@ -36,7 +36,7 @@ tree* insert_data(tree *address, int data){
     if(data < address->data){
         address->left_data = insert_data(address->left_data, data);
     }
-    if(data > address->data){
+    if(data >= address->data){
         address->right_data = insert_data(address->right_data, data);
     }
 
@@ -88,7 +88,7 @@ tree* search_data(tree *address, int data){
     return address;
 }
 
-// delete data
+// delete data 
 tree* delete_data(tree *address, int data){
     tree *temp;
 
