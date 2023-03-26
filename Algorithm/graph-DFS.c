@@ -1,3 +1,5 @@
+// graph DFS algorithm
+
 #include <stdio.h>
 
 int matrix[10][10]; // adjacency matrix to store the graph
