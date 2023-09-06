@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int n, *duplicateArray;
+int n;
 
 // function prototypes
 void showData(int i);
@@ -32,7 +32,6 @@ int main(){
 
   // creating array of n size
   array = malloc(sizeof(fcfs) * n);
-  duplicateArray = malloc(sizeof(fcfs) * n);
 
   /* call 'enter data' function to take data input */
   printf("\nenter all the required data: \n\n");
