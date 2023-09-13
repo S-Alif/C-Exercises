@@ -1,3 +1,4 @@
+/* CPU Scheduling Algorithm */
 /* FCFS : First Come First Serve */
 
 #include <stdio.h>
@@ -8,6 +9,7 @@ int n;
 // function prototypes
 void showData(int i);
 void calculate();
+void showAvg();
 void enterData(int indexPosition);
 
 // declare a structure for fsfs
@@ -34,7 +36,7 @@ int main(){
   array = malloc(sizeof(fcfs) * n);
 
   /* call 'enter data' function to take data input */
-  printf("\nenter all the required data: \n\n");
+  printf("\nenter all the required data: \n--------------------------------\n\n");
   for (int i = 0; i < n; i++){
     enterData(i);
   }
@@ -57,6 +59,10 @@ int main(){
     showData(i);
   }
 
+  // showing average
+  showAvg();
+
+  return 0;
 }
 
 // enter data
@@ -76,6 +82,18 @@ void enterData(int indexPosition){
 // show data
 void showData(int i){
   printf("%s \t\t%10d \t\t%10d \t\t%10d \t\t%5d \t\t%5d\n", array[i].processName, array[i].burstTime, array[i].arrivalTime, array[i].completionTime, array[i].turnAroundTime, array[i].waitingTime);
+}
+
+void showAvg(){
+  float avgTat = 0, avgWt = 0;
+
+  for (int i = 0; i < n; i++){
+    avgTat = avgTat + array[i].turnAroundTime;
+    avgWt = avgWt + array[i].waitingTime;
+  }
+
+  printf("\n\nAverage turn around time : %.2f", avgTat/n);
+  printf("\nAverage turn waiting time : %.2f", avgWt/n);
 }
 
 // calculate data
