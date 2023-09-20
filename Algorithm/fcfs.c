@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// global variable for array size
 int n;
 
 // function prototypes
@@ -84,6 +85,7 @@ void showData(int i){
   printf("%s \t\t%10d \t\t%10d \t\t%10d \t\t%5d \t\t%5d\n", array[i].processName, array[i].burstTime, array[i].arrivalTime, array[i].completionTime, array[i].turnAroundTime, array[i].waitingTime);
 }
 
+// show average function
 void showAvg(){
   float avgTat = 0, avgWt = 0;
 
