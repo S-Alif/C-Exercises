@@ -19,6 +19,7 @@ typedef struct srtf{
 srtf *array;
 int current_time = 0, n;
 
+// find shortest job
 int findShortestJob(srtf array[], int current_time){
   int shortest_job_index = -1;
   int shortest_job_time = -1;
@@ -48,9 +49,9 @@ void enterData(int indexPosition){
 
   array[indexPosition].remaining_time = array[indexPosition].burst_time;
 
-  printf("\n----------------------------\n\n");
+  printf("----------------------------\n");
 }
-
+// calculate data
 void calculate(int shortest_job, int current_time){
 
   if(array[shortest_job].remaining_time == 0){
@@ -70,10 +71,6 @@ void show_result(){
   int i, j;
 
   for (i = 0; i < n; i++){
-
-    avgTat = avgTat + array[i].turnaround_time;
-    avgWt = avgWt + array[i].waiting_time;
-
     for (j = i + 1; j < n; j++){
       if(array[i].completion_time > array[j].completion_time){
         sorted = array[i];
@@ -90,6 +87,11 @@ void show_result(){
            array[i].turnaround_time, array[i].waiting_time);
   }
 
+  for(i = 0; i < n; i++){
+    avgTat = avgTat + array[i].turnaround_time;
+    avgWt = avgWt + array[i].waiting_time;
+  }
+
   printf("\n\nAverage turnaround time : %.2f", avgTat/n);
   printf("\nAverage waiting time : %.2f", avgWt/n);
 
@@ -100,6 +102,7 @@ int main(){
 
   printf("Enter the number of array: ");
   scanf("%d", &n);
+  printf("\n");
 
   array = malloc(sizeof(srtf) * n);
 
@@ -117,7 +120,7 @@ int main(){
 
     array[shortest_job_index].remaining_time--;
     calculate(shortest_job_index, current_time);
-    current_time++;    
+    current_time++;  
   }
 
   show_result();

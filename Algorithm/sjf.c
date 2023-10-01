@@ -61,11 +61,12 @@ void enterData(int indexPosition){
   printf("enter arrival time : ");
   scanf("%d", &processes[indexPosition].arrival_time);
 
-  printf("\n----------------------------\n\n");
+  printf("----------------------------\n");
 }
 
 int main() {
   process sorted;
+  float avgTat=0, avgWt=0;
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
@@ -110,6 +111,14 @@ int main() {
                processes[i].burst_time, processes[i].completion_time,
                processes[i].turnaround_time, processes[i].waiting_time);
     }
+
+    for(int i=0; i< n; i++){
+      avgTat = avgTat + processes[i].turnaround_time;
+      avgWt = avgWt + processes[i].waiting_time;
+    }
+
+    printf("\n\nAverage turn around time : %.2f", avgTat/n);
+    printf("\nAverage turn waiting time : %.2f", avgWt/n);
 
     return 0;
 }
