@@ -74,7 +74,7 @@ int main() {
 
   array = malloc(sizeof(process) * n);
 
-  printf("\n[Note : Higher value higher priority]\n\n");
+  printf("\n[Note : lower value higher priority]\n\n");
 
   // Input process details
   for (int i = 0; i < n; i++){
@@ -97,7 +97,7 @@ int main() {
     current_time = calculate(high_priority, current_time);
   }
 
-  
+
 
   // Display results
   printf("\nprocess\tArrival Time\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\n");
