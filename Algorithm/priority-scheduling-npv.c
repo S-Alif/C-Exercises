@@ -97,12 +97,21 @@ int main() {
     current_time = calculate(high_priority, current_time);
   }
 
+  for (int i = 0; i < n; i++){
+    for(int j = i+1; j < n; j++){
+      if(array[i].priority > array[j].priority){
+        sorted = array[i];
+        array[i] = array[j];
+        array[j] = sorted;
+      }
+    }
+  }
 
 
   // Display results
-  printf("\nprocess\tArrival Time\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\n");
+  printf("\nprocess\tPriority\tArrival Time\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\n");
   for (int i = 0; i < n; i++){
-    printf("%s\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n", array[i].process, array[i].arrival_time,
+    printf("%s\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n", array[i].process, array[i].priority, array[i].arrival_time,
                array[i].burst_time, array[i].completion_time,
                array[i].turnaround_time, array[i].waiting_time);
   }
