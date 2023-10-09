@@ -80,7 +80,7 @@ int main() {
 
   mergeSort(array, 0, n - 1);
 
-  printf("Array after sorting : ");
+  printf("Sorted array : ");
   printArray(array, n);
 
   return 0;

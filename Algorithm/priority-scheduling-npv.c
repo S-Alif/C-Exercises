@@ -32,7 +32,7 @@ int calculate(int high_priority, int current_time){
   return current_time;
 }
 
-// Function to find the process with the shortest burst time in the ready queue
+// find the most priority process
 int most_priority(process array[], int current_time) {
   int highest_priority = -1;
   int current_priority = 100;

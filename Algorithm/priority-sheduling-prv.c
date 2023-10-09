@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include <stdbool.h>
 
-typedef struct srtf{
+typedef struct process{
   char process[10];
   int arrival_time;
   int burst_time;
@@ -15,13 +15,13 @@ typedef struct srtf{
   int priority;
 
   bool completed;
-} srtf;
+} process;
 
-srtf *array;
+process *array;
 int current_time = 0, n;
 
-// find shortest job
-int high_priority(srtf array[], int current_time){
+// find the most priority process
+int high_priority(process array[], int current_time){
   int highest_priority = -1;
   int current_priority = 100;
 
@@ -66,8 +66,9 @@ void calculate(int highPriority, int current_time){
   }
 }
 
+// display the result
 void show_result(){
-  srtf sorted;
+  process sorted;
   float avgTat = 0, avgWt = 0;
   int i, j;
 
@@ -106,7 +107,7 @@ int main(){
   scanf("%d", &n);
   printf("\n");
 
-  array = malloc(sizeof(srtf) * n);
+  array = malloc(sizeof(process) * n);
 
   printf("\n[Note : lower value higher priority]\n\n");
 
