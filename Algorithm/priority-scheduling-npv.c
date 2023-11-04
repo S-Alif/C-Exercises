@@ -99,7 +99,7 @@ int main() {
 
   for (int i = 0; i < n; i++){
     for(int j = i+1; j < n; j++){
-      if(array[i].priority > array[j].priority){
+      if(array[i].completion_time > array[j].completion_time){
         sorted = array[i];
         array[i] = array[j];
         array[j] = sorted;
