@@ -52,6 +52,9 @@ void algorithm() {
                     calculate(i);
                 }
             }
+            else{
+                current_time++;
+            }
         }
     }
 
