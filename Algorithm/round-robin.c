@@ -38,7 +38,7 @@ void calculate(int index) {
 }
 
 void algorithm() {
-    int remaining = n, i;
+    int remaining = n, i, j;
 
     while (remaining > 0) {
         for (i = 0; i < n; i++) {
@@ -51,6 +51,16 @@ void algorithm() {
                     remaining--;
                     calculate(i);
                 }
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++){
+        for(j=i+1; j < n; j++){
+            if(array[i].completion_time > array[j].completion_time){
+                process sorted = array[i];
+                array[i] = array[j];
+                array[j] = sorted;
             }
         }
     }
