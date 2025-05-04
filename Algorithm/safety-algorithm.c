@@ -58,12 +58,12 @@ int isSafe(int safeSeq[]){
 
 // Function to allocate resources to a process
 void allocateResources(int process){
-  printf("Enter resource allocation for process P%d:\n", process);
+  printf("\nEnter resource allocation for process P%d:", process);
   for (int i = 0; i < resources; ++i){
     scanf("%d", &allocation[process][i]);
   }
 
-  printf("Enter maximum resource allocation for process P%d:\n", process);
+  printf("Enter maximum resource allocation for process P%d:", process);
   for (int i = 0; i < resources; ++i){
     scanf("%d", &max_allocation[process][i]);
     need[process][i] = max_allocation[process][i] - allocation[process][i];

@@ -47,7 +47,7 @@ void algorithm() {
                 array[i].remaining_time = array[i].remaining_time - execution_time;
                 current_time = current_time + execution_time;
 
-                if (!array[i].completed && array[i].remaining_time == 0) {
+                if (array[i].remaining_time <= 0) {
                     remaining--;
                     calculate(i);
                 }
